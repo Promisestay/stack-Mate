@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudDrop | Secure Cloud Storage & File Sharing</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="img/logoclouddrop.png">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="img/logoclouddrop.png" alt="CloudDrop Logo" class="logo-img" width="50">
+        <span>CloudDrop</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+      <div class="nav-buttons">
+        <a href="#" class="btn btn-outline" id="loginBtn">Login</a>
+        <a href="#" class="btn btn-primary" id="signupBtn">Sign Up Free</a>
+      </div>
+      <div class="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Secure Cloud Storage for All Your Files</h1>
+      <p>Store, access, and share your files securely from anywhere in the world with industry-leading encryption and seamless synchronization.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-light" id="heroSignupBtn">
+          <i class="fas fa-cloud-upload-alt"></i>
+          Start Free Trial
+        </a>
+        <a href="#" class="btn btn-outline" style="color: white; border-color: white;" id="demoBtn">
+          <i class="fas fa-play-circle"></i>
+          Watch Demo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="section-title">
+      <h2>Why Choose CloudDrop?</h2>
+      <p>Experience the best in cloud storage with features designed for security, convenience, and collaboration</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Bank-Level Security</h3>
+        <p>Your files are protected with end-to-end encryption, two-factor authentication, and advanced security protocols that meet industry standards.</p>
+        <a href="#" class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-sync-alt"></i>
+        </div>
+        <h3>Seamless Sync</h3>
+        <p>Automatically sync files across all your devices with real-time updates. Access your files from desktop, mobile, or web instantly.</p>
+        <a href="#" class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Easy Collaboration</h3>
+        <p>Share files and folders with team members, control access permissions, and collaborate in real-time with version control.</p>
+        <a href="#" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing" id="pricing">
+    <div class="section-title">
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Choose the plan that fits your needs. All plans include a 30-day free trial with no commitment required.</p>
+    </div>
+    
+    <div class="billing-toggle">
+      <span class="toggle-label">Monthly</span>
+      <label class="toggle-container">
+        <input type="checkbox" class="toggle-input" id="billingToggle">
+        <span class="toggle-switch"></span>
+      </label>
+      <span class="toggle-label">Yearly</span>
+      <span class="savings-badge">Save 20%</span>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-header">
+          <h3>Free Plan</h3>
+          <div class="storage-visual">
+            <div class="storage-icon">5</div>
+            <div class="storage-text">GB Storage</div>
+          </div>
+        </div>
+        <div class="price">$0</div>
+        <div class="price-period">Forever free</div>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> 5GB secure storage</li>
+          <li><i class="fas fa-check"></i> Basic file sharing</li>
+          <li><i class="fas fa-check"></i> Mobile & web access</li>
+          <li><i class="fas fa-check"></i> Email support</li>
+        </ul>
+        <a href="#" class="btn btn-outline signup-trigger" style="width: 100%;">Get Started</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="plan-header">
+          <h3>Pro Plan</h3>
+          <div class="storage-visual">
+            <div class="storage-icon" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">1TB</div>
+            <div class="storage-text">Storage</div>
+          </div>
+        </div>
+        <div class="price" id="proPrice">$9.99</div>
+        <div class="price-period" id="proPeriod">per month</div>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> 1TB secure storage</li>
+          <li><i class="fas fa-check"></i> Advanced sharing controls</li>
+          <li><i class="fas fa-check"></i> Priority sync</li>
+          <li><i class="fas fa-check"></i> Version history</li>
+          <li><i class="fas fa-check"></i> 24/7 priority support</li>
+        </ul>
+        <a href="#" class="btn btn-primary signup-trigger" style="width: 100%;">Start Free Trial</a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="plan-header">
+          <h3>Business Plan</h3>
+          <div class="storage-visual">
+            <div class="storage-icon" style="background: linear-gradient(135deg, #7c3aed, #5b21b6);">5TB</div>
+            <div class="storage-text">Storage</div>
+          </div>
+        </div>
+        <div class="price" id="businessPrice">$24.99</div>
+        <div class="price-period" id="businessPeriod">per month</div>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> 5TB secure storage</li>
+          <li><i class="fas fa-check"></i> Team collaboration tools</li>
+          <li><i class="fas fa-check"></i> Admin controls</li>
+          <li><i class="fas fa-check"></i> Advanced security</li>
+          <li><i class="fas fa-check"></i> Dedicated support</li>
+        </ul>
+        <a href="#" class="btn btn-outline signup-trigger" style="width: 100%;">Start Free Trial</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section class="reviews" id="reviews">
+    <div class="section-title">
+      <h2>What Our Users Say</h2>
+      <p>Join thousands of satisfied customers who trust CloudDrop with their important files</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">SM</div>
+          <div class="reviewer-info">
+            <h4>Sarah Mitchell</h4>
+            <p>Marketing Director</p>
+          </div>
+        </div>
+        <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="review-text">"CloudDrop has revolutionized how our team collaborates. The seamless sync and security features give us peace of mind while working remotely."</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">JD</div>
+          <div class="reviewer-info">
+            <h4>James Davis</h4>
+            <p>Freelance Designer</p>
+          </div>
+        </div>
+        <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="review-text">"As a creative professional, I need reliable storage for large files. CloudDrop delivers with fast uploads and excellent organization tools."</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="reviewer-avatar">AL</div>
+          <div class="reviewer-info">
+            <h4>Anna Lopez</h4>
+            <p>Small Business Owner</p>
+          </div>
+        </div>
+        <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="review-text">"The pricing is transparent and fair. We've saved money while getting better features than our previous cloud storage solution."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support Section -->
+  <section class="support" id="support">
+    <div class="section-title">
+      <h2>We're Here to Help</h2>
+      <p>Get the support you need, when you need it, through multiple channels</p>
+    </div>
+    <div class="support-grid">
+      <div class="support-item">
+        <i class="fas fa-comments"></i>
+        <h3>Live Chat</h3>
+        <p>Get instant help from our support team available 24/7</p>
+      </div>
+      <div class="support-item">
+        <i class="fas fa-envelope"></i>
+        <h3>Email Support</h3>
+        <p>Send us your questions and get detailed responses within hours</p>
+      </div>
+      <div class="support-item">
+        <i class="fas fa-book"></i>
+        <h3>Help Center</h3>
+        <p>Browse our comprehensive guides and tutorials</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>CloudDrop</h4>
+        <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">Secure cloud storage for individuals and businesses.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Updates</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Tutorials</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 CloudDrop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="loginClose">&times;</span>
+      <h2 style="margin-bottom: 1.5rem; color: #1e293b;">Welcome Back</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <div id="loginError" style="color: #ef4444; margin-bottom: 1rem; display: none;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Sign In</button>
+        <p style="text-align: center; color: #64748b;">Don't have an account? <a href="#" id="switchToSignup" style="color: #2563eb;">Sign up here</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="signupClose">&times;</span>
+      <h2 style="margin-bottom: 1.5rem; color: #1e293b;">Create Your Account</h2>
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" required>
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" required>
+          <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">
+            At least 8 characters
+          </div>
+        </div>
+        <div id="signupError" style="color: #ef4444; margin-bottom: 1rem; display: none;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Create Account</button>
+        <p style="text-align: center; color: #64748b;">Already have an account? <a href="#" id="switchToLogin" style="color: #2563eb;">Sign in here</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Include Auth System -->
+  <script src="auth.js"></script>
+  
+  <script>
+    // Initialize auth
+    // const auth = new CloudDropAuth();
+
+    // Check if already logged in
+    if (auth.isAuthenticated()) {
+      const user = auth.getCurrentUser();
+      // Redirect based on user status
+      if (user.isNewUser) {
+        window.location.href = 'newdashfor.html';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+
+    // DOM Elements
+    const loginModal = document.getElementById('loginModal');
+    const signupModal = document.getElementById('signupModal');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const loginError = document.getElementById('loginError');
+    const signupError = document.getElementById('signupError');
+
+    // Show notification
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: ${type === 'success' ? '#10b981' : '#ef4444'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        z-index: 2000;
+        animation: slideInRight 0.3s ease;
+      `;
+      notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+          <span>${message}</span>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => document.body.removeChild(notification), 300);
+      }, 3000);
+    }
+
+    // Login form submission
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const submitBtn = loginForm.querySelector('button[type="submit"]');
+      
+      // Show loading state
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+      submitBtn.disabled = true;
+      loginError.style.display = 'none';
+      
+      // Simulate network delay
+      setTimeout(() => {
+        const result = auth.login(email, password);
+        
+        if (result.success) {
+          showNotification('Login successful! Redirecting...');
+          setTimeout(() => {
+            // Redirect based on user status
+            window.location.href = result.isNewUser ? 'newdashfor.html' : 'dashboard.html';
+          }, 1000);
+        } else {
+          loginError.textContent = result.message;
+          loginError.style.display = 'block';
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          showNotification(result.message, 'error');
+        }
+      }, 1000);
+    });
+
+    // Signup form submission
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const submitBtn = signupForm.querySelector('button[type="submit"]');
+      
+      // Show loading state
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+      submitBtn.disabled = true;
+      signupError.style.display = 'none';
+      
+      // Simulate network delay
+      setTimeout(() => {
+        const result = auth.register(name, email, password);
+        
+        if (result.success) {
+          showNotification('Account created successfully! Redirecting...');
+          setTimeout(() => {
+            // Always redirect new users to onboarding
+            window.location.href = 'newdashfor.html';
+          }, 1000);
+        } else {
+          signupError.textContent = result.message;
+          signupError.style.display = 'block';
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          showNotification(result.message, 'error');
+          
+          // If user exists, offer to switch to login
+          if (result.existingUser) {
+            signupError.innerHTML = `${result.message} <a href="#" onclick="switchToLoginModal(); return false;" style="color: #2563eb; text-decoration: underline;">Login here</a>`;
+          }
+        }
+      }, 1000);
+    });
+
+    // Modal controls
+    document.querySelectorAll('#loginBtn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'block';
+        signupModal.style.display = 'none';
+      });
+    });
+
+    document.querySelectorAll('#signupBtn, #heroSignupBtn, .signup-trigger').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        signupModal.style.display = 'block';
+        loginModal.style.display = 'none';
+      });
+    });
+
+    document.getElementById('loginClose').addEventListener('click', () => {
+      loginModal.style.display = 'none';
+    });
+
+    document.getElementById('signupClose').addEventListener('click', () => {
+      signupModal.style.display = 'none';
+    });
+
+    document.getElementById('switchToSignup').addEventListener('click', (e) => {
+      e.preventDefault();
+      loginModal.style.display = 'none';
+      signupModal.style.display = 'block';
+    });
+
+    document.getElementById('switchToLogin').addEventListener('click', (e) => {
+      e.preventDefault();
+      signupModal.style.display = 'none';
+      loginModal.style.display = 'block';
+    });
+
+    function switchToLoginModal() {
+      signupModal.style.display = 'none';
+      loginModal.style.display = 'block';
+    }
+
+    window.addEventListener('click', (e) => {
+      if (e.target === loginModal) loginModal.style.display = 'none';
+      if (e.target === signupModal) signupModal.style.display = 'none';
+    });
+
+    // Password strength indicator
+    const signupPassword = document.getElementById('signupPassword');
+    signupPassword.addEventListener('input', function() {
+      const password = this.value;
+      let strength = 0;
+      
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+      // Remove existing indicator and text before adding new ones
+  const existingIndicator = this.parentElement.querySelector('.password-strength');
+  const existingText = this.parentElement.querySelector('.strength-text');
+  if (existingIndicator) existingIndicator.remove();
+  if (existingText) existingText.remove();
+
+  if (password.length > 0) {
+    // Create strength bar container
+    const indicator = document.createElement('div');
+    indicator.className = 'password-strength';
+    indicator.style.cssText = `
+      margin-top: 0.5rem;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      overflow: hidden;
+    `;
+
+    // Create strength bar fill
+    const strengthBar = document.createElement('div');
+    const colors = ['#ef4444', '#f59e0b', '#3b82f6', '#10b981'];
+    strengthBar.style.cssText = `
+      height: 40%;
+      transition: all 0.3s ease;
+      width: ${(strength / 4) * 100}%;
+      background: ${colors[strength - 1] || '#ef4444'};
+    `;
+    indicator.appendChild(strengthBar);
+
+    // Create text element (only one)
+    const strengthText = document.createElement('div');
+    strengthText.className = 'strength-text';
+    strengthText.style.cssText = `
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      color: ${colors[strength - 1] || '#ef4444'};
+      display: block;
+    `;
+
+    const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+    strengthText.textContent = labels[strength - 1] || 'Too weak';
+
+    // Append both once
+    this.parentElement.appendChild(indicator);
+    this.parentElement.appendChild(strengthText);
+  }
+});
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 100) {
+        header.style.background = 'rgba(255, 255, 255, 0.98)';
+        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.boxShadow = 'none';
+      }
+    });
+
+    // Billing toggle
+    const billingToggle = document.getElementById('billingToggle');
+    billingToggle.addEventListener('change', function() {
+      const proPrice = document.getElementById('proPrice');
+      const proPeriod = document.getElementById('proPeriod');
+      const businessPrice = document.getElementById('businessPrice');
+      const businessPeriod = document.getElementById('businessPeriod');
+      
+      if (this.checked) {
+        proPrice.textContent = '$95.90';
+        proPeriod.textContent = 'per year';
+        businessPrice.textContent = '$239.90';
+        businessPeriod.textContent = 'per year';
+      } else {
+        proPrice.textContent = '$9.99';
+        proPeriod.textContent = 'per month';
+        businessPrice.textContent = '$24.99';
+        businessPeriod.textContent = 'per month';
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenu.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.classList.toggle('menu-open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(item => {
+      item.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('nav')) {
+        navLinks.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      }
+    });
+
+    // Animate on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .pricing-card, .review-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+
+    // Demo button
+    document.getElementById('demoBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const demoOverlay = document.createElement('div');
+      demoOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 3000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+      `;
+      
+      demoOverlay.innerHTML = `
+        <div style="background: white; padding: 3rem; border-radius: 16px; text-align: center; max-width: 500px; margin: 2rem;">
+          <i class="fas fa-play-circle" style="font-size: 4rem; color: #2563eb; margin-bottom: 1rem;"></i>
+          <h3 style="margin-bottom: 1rem; color: #1e293b;">Demo Video</h3>
+          <p style="color: #64748b; margin-bottom: 2rem;">Watch how CloudDrop makes file storage and sharing effortless</p>
+          <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button class="btn btn-primary" onclick="this.parentElement.parentElement.parentElement.remove()">
+              <i class="fas fa-play"></i> Play Demo
+            </button>
+            <button class="btn btn-outline" onclick="this.parentElement.parentElement.parentElement.remove()">
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(demoOverlay);
+    });
+
+    // Add animation styles
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudDrop | Secure Cloud Storage & File Sharing</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="img/logoclouddrop.png">
+  <script src="auth.js"></script>
+  <script src="dashboard-init.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+    }
+
+    .search-container {
+      position: relative;
+      width: 400px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 3rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 24px;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      background: #f8fafc;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-btn {
+      padding: 0.5rem;
+      border: none;
+      background: none;
+      color: #64748b;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .header-btn:hover {
+      background: #f1f5f9;
+      color: #2563eb;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 73px;
+      width: 280px;
+      height: calc(100vh - 73px);
+      background: white;
+      border-right: 1px solid #e2e8f0;
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .new-btn {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .new-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 0.25rem;
+      color: #64748b;
+    }
+
+    .nav-item:hover {
+      background: #f1f5f9;
+      color: #2563eb;
+    }
+
+    .nav-item.active {
+      background: #eff6ff;
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    .nav-item i {
+      width: 20px;
+      text-align: center;
+    }
+
+    .storage-info {
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 2rem;
+    }
+
+    .storage-bar {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.75rem 0;
+    }
+
+    .storage-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      width: 5%;
+      transition: width 0.3s ease;
+    }
+
+    .storage-text {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 280px;
+      padding: 2rem;
+      min-height: calc(100vh - 73px);
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    .welcome-icon {
+      font-size: 4rem;
+      color: #2563eb;
+      margin-bottom: 1.5rem;
+    }
+
+    .welcome-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .welcome-subtitle {
+      font-size: 1.25rem;
+      color: #64748b;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .welcome-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      border: none;
+      font-size: 0.95rem;
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .action-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .action-btn.outline {
+      background: transparent;
+      color: #2563eb;
+      border: 2px solid #2563eb;
+    }
+
+    .action-btn.outline:hover {
+      background: #2563eb;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Onboarding Steps */
+    .onboarding-section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title i {
+      color: #2563eb;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      border-color: #2563eb;
+    }
+
+    .step-number {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      border-radius: 0 12px 0 12px;
+    }
+
+    .step-icon {
+      width: 60px;
+      height: 60px;
+      background: #eff6ff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: #2563eb;
+      font-size: 1.5rem;
+    }
+
+    .step-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.75rem;
+    }
+
+    .step-description {
+      color: #64748b;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .step-action {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #2563eb;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .step-action:hover {
+      gap: 0.75rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e2e8f0;
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      color: #cbd5e1;
+      margin-bottom: 1.5rem;
+    }
+
+    .empty-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    .empty-description {
+      color: #64748b;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* Quick Tips */
+    .tips-section {
+      margin-top: 2rem;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tip-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+
+    .tip-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .tip-icon {
+      width: 40px;
+      height: 40px;
+      background: #eff6ff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: #2563eb;
+    }
+
+    .tip-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+
+    .tip-description {
+      color: #64748b;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    /* Upload Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #64748b;
+    }
+
+    .close:hover {
+      color: #1e293b;
+    }
+
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin: 1rem 0;
+    }
+
+    .upload-area:hover,
+    .upload-area.dragover {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+    }
+
+    .upload-area:hover .upload-icon,
+    .upload-area.dragover .upload-icon {
+      color: #2563eb;
+    }
+
+    .upload-text {
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+
+    .upload-btn {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      min-width: 300px;
+      display: none;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .search-container {
+        width: 200px;
+      }
+
+      .welcome-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <img src="img/logoclouddrop.png" alt="CloudDrop Logo" class="logo-img" width="50">
+        <span>CloudDrop</span>
+      </div>
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Search files and folders">
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="header-btn" title="Notifications">
+        <i class="fas fa-bell"></i>
+      </button>
+      <button class="header-btn" title="Settings">
+        <i class="fas fa-cog"></i>
+      </button>
+      <div class="user-avatar" title="User Menu">AO</div>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <button class="new-btn" id="newBtn">
+      <i class="fas fa-plus"></i>
+      New
+    </button>
+
+    <div class="nav-section">
+      <h3>Quick Access</h3>
+      <div class="nav-item active" data-filter="all">
+        <i class="fas fa-home"></i>
+        <span>My Drive</span>
+      </div>
+      <div class="nav-item" data-filter="shared">
+        <i class="fas fa-users"></i>
+        <span>Shared with me</span>
+      </div>
+      <div class="nav-item" data-filter="recent">
+        <i class="fas fa-clock"></i>
+        <span>Recent</span>
+      </div>
+      <div class="nav-item" data-filter="starred">
+        <i class="fas fa-star"></i>
+        <span>Starred</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <h3>File Types</h3>
+      <div class="nav-item" data-filter="images">
+        <i class="fas fa-image"></i>
+        <span>Images</span>
+      </div>
+      <div class="nav-item" data-filter="documents">
+        <i class="fas fa-file-alt"></i>
+        <span>Documents</span>
+      </div>
+      <div class="nav-item" data-filter="videos">
+        <i class="fas fa-video"></i>
+        <span>Videos</span>
+      </div>
+      <div class="nav-item" data-filter="audio">
+        <i class="fas fa-music"></i>
+        <span>Audio</span>
+      </div>
+    </div>
+
+    <div class="storage-info">
+      <div class="storage-text">
+        <strong>0.1 GB</strong> of 15 GB used
+      </div>
+      <div class="storage-bar">
+        <div class="storage-fill"></div>
+      </div>
+      <div class="storage-text">
+        1% full
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <i class="fas fa-cloud-upload-alt welcome-icon"></i>
+      <h1 class="welcome-title">Welcome to CloudDrop!</h1>
+      <p class="welcome-subtitle">
+        Your secure cloud storage is ready. Let's get started by uploading your first files or exploring the features that will make file management effortless.
+      </p>
+      <div class="welcome-actions">
+        <button class="action-btn primary" id="uploadFirstFiles">
+          <i class="fas fa-cloud-upload-alt"></i>
+          Upload Your First Files
+        </button>
+        <button class="action-btn outline" id="takeTour">
+          <i class="fas fa-compass"></i>
+          Take a Tour
+        </button>
+      </div>
+    </section>
+
+    <!-- Onboarding Steps -->
+    <section class="onboarding-section">
+      <h2 class="section-title">
+        <i class="fas fa-road"></i>
+        Get Started in 4 Easy Steps
+      </h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h3 class="step-title">Upload Your Files</h3>
+          <p class="step-description">
+            Drag and drop files or use the upload button to add documents, photos, videos, and more to your cloud storage.
+          </p>
+          <div class="step-action" id="uploadStep">
+            <span>Upload now</span>
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-icon">
+            <i class="fas fa-folder-plus"></i>
+          </div>
+          <h3 class="step-title">Organize with Folders</h3>
+          <p class="step-description">
+            Create folders to keep your files organized. You can nest folders inside each other for better structure.
+          </p>
+          <div class="step-action" id="createFolderStep">
+            <span>Create a folder</span>
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-icon">
+            <i class="fas fa-share-alt"></i>
+          </div>
+          <h3 class="step-title">Share with Others</h3>
+          <p class="step-description">
+            Share files or folders with colleagues, friends, or family. Control whether they can view or edit your content.
+          </p>
+          <div class="step-action" id="shareStep">
+            <span>Learn about sharing</span>
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3 class="step-title">Install Mobile App</h3>
+          <p class="step-description">
+            Access your files on the go by installing the CloudDrop mobile app for iOS or Android.
+          </p>
+          <div class="step-action" id="mobileAppStep">
+            <span>Get the app</span>
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Empty State -->
+    <section class="empty-state">
+      <i class="fas fa-folder-open empty-icon"></i>
+      <h2 class="empty-title">Your CloudDrive is Empty</h2>
+      <p class="empty-description">
+        Start by uploading your files or creating folders to organize your content. Everything you upload will be securely stored and accessible from any device.
+      </p>
+      <button class="action-btn primary" id="uploadEmptyState">
+        <i class="fas fa-cloud-upload-alt"></i>
+        Upload Your First File
+      </button>
+    </section>
+
+    <!-- Quick Tips -->
+    <section class="tips-section">
+      <h2 class="section-title">
+        <i class="fas fa-lightbulb"></i>
+        Quick Tips for New Users
+      </h2>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-sync-alt"></i>
+          </div>
+          <h3 class="tip-title">Automatic Sync</h3>
+          <p class="tip-description">
+            Your files automatically sync across all devices where you're signed in to CloudDrop.
+          </p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="tip-title">Bank-Level Security</h3>
+          <p class="tip-description">
+            All your files are encrypted with industry-leading security protocols.
+          </p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h3 class="tip-title">Powerful Search</h3>
+          <p class="tip-description">
+            Find any file instantly with our advanced search that recognizes file contents.
+          </p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">
+            <i class="fas fa-history"></i>
+          </div>
+          <h3 class="tip-title">Version History</h3>
+          <p class="tip-description">
+            Access previous versions of your files for up to 30 days with any paid plan.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Upload Modal -->
+  <div id="uploadModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="uploadClose">&times;</span>
+      <h2 style="margin-bottom: 1.5rem; color: #1e293b;">Upload Your First Files</h2>
+      <p style="color: #64748b; margin-bottom: 1.5rem;">Welcome to CloudDrop! Start by uploading some files to your secure cloud storage.</p>
+      <div class="upload-area" id="uploadArea">
+        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+        <div class="upload-text">
+          <p><strong>Drag and drop files here</strong></p>
+          <p>or click to browse</p>
+        </div>
+        <button class="upload-btn" id="browseBtn">Browse Files</button>
+      </div>
+      <input type="file" class="file-input" id="fileInput" multiple>
+    </div>
+  </div>
+
+  <!-- Progress Container -->
+  <div class="progress-container" id="progressContainer">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+      <i class="fas fa-upload" style="color: #2563eb;"></i>
+      <span id="progressText">Uploading files...</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div style="font-size: 0.875rem; color: #64748b;" id="progressDetails">0% complete</div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="dashboard-init.js"></script>
+
+  <script>
+    // DOM Elements
+    const newBtn = document.getElementById('newBtn');
+    const uploadModal = document.getElementById('uploadModal');
+    const uploadClose = document.getElementById('uploadClose');
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    
+    // Welcome section buttons
+    const uploadFirstFilesBtn = document.getElementById('uploadFirstFiles');
+    const takeTourBtn = document.getElementById('takeTour');
+    const uploadEmptyStateBtn = document.getElementById('uploadEmptyState');
+    
+    // Step actions
+    const uploadStep = document.getElementById('uploadStep');
+    const createFolderStep = document.getElementById('createFolderStep');
+    const shareStep = document.getElementById('shareStep');
+    const mobileAppStep = document.getElementById('mobileAppStep');
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      setupEventListeners();
+    });
+
+    function setupEventListeners() {
+      // Upload modal
+      newBtn.addEventListener('click', () => {
+        uploadModal.style.display = 'block';
+      });
+
+      uploadFirstFilesBtn.addEventListener('click', () => {
+        uploadModal.style.display = 'block';
+      });
+
+      uploadEmptyStateBtn.addEventListener('click', () => {
+        uploadModal.style.display = 'block';
+      });
+
+      uploadStep.addEventListener('click', () => {
+        uploadModal.style.display = 'block';
+      });
+
+      uploadClose.addEventListener('click', () => {
+        uploadModal.style.display = 'none';
+      });
+
+      window.addEventListener('click', (e) => {
+        if (e.target === uploadModal) {
+          uploadModal.style.display = 'none';
+        }
+      });
+
+      // File upload
+      browseBtn.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      uploadArea.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', handleFileUpload);
+
+      // Drag and drop
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        handleFileUpload({ target: { files } });
+      });
+
+      // Take tour button
+      takeTourBtn.addEventListener('click', () => {
+        showNotification("Starting your CloudDrop tour...");
+        // In a real app, this would start an interactive tour
+        setTimeout(() => {
+          showNotification("Tour completed! You're now ready to use CloudDrop.");
+        }, 2000);
+      });
+
+      // Create folder step
+      createFolderStep.addEventListener('click', () => {
+        const folderName = prompt("Enter folder name:", "My First Folder");
+        if (folderName) {
+          showNotification(`Folder "${folderName}" created successfully!`);
+        }
+      });
+
+      // Share step
+      shareStep.addEventListener('click', () => {
+        showNotification("Opening sharing guide...");
+        // In a real app, this would open a tutorial or guide
+      });
+
+      // Mobile app step
+      mobileAppStep.addEventListener('click', () => {
+        showNotification("Redirecting to app store...");
+        // In a real app, this would redirect to app store
+      });
+    }
+
+    function handleFileUpload(event) {
+      const uploadedFiles = Array.from(event.target.files);
+      
+      if (uploadedFiles.length === 0) return;
+
+      uploadModal.style.display = 'none';
+      progressContainer.style.display = 'block';
+
+      // Simulate upload progress
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(progressInterval);
+          
+          setTimeout(() => {
+            progressContainer.style.display = 'none';
+            showNotification(`${uploadedFiles.length} file(s) uploaded successfully!`);
+            
+            // Update storage usage (simulated)
+            const storageFill = document.querySelector('.storage-fill');
+            const storageText = document.querySelector('.storage-text strong');
+            storageFill.style.width = '15%';
+            storageText.textContent = '2.3 GB';
+            
+            // Hide empty state and show success message
+            document.querySelector('.empty-state').innerHTML = `
+              <i class="fas fa-check-circle empty-icon" style="color: #10b981;"></i>
+              <h2 class="empty-title">Files Uploaded Successfully!</h2>
+              <p class="empty-description">
+                Great! Your files are now securely stored in the cloud. 
+                You can access them from any device or share them with others.
+              </p>
+              <button class="action-btn primary" id="uploadMoreFiles">
+                <i class="fas fa-cloud-upload-alt"></i>
+                Upload More Files
+              </button>
+            `;
+            
+            // Add event listener to the new button
+            document.getElementById('uploadMoreFiles').addEventListener('click', () => {
+              uploadModal.style.display = 'block';
+            });
+          }, 1000);
+        }
+
+        document.getElementById('progressFill').style.width = `${progress}%`;
+        document.getElementById('progressDetails').textContent = `${Math.round(progress)}% complete`;
+      }, 200);
+    }
+
+    function showNotification(message) {
+      // Create a simple notification
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: #10b981;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        z-index: 2000;
+        animation: slideInRight 0.3s ease;
+      `;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+
+    // Add CSS animations for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudDrop Auth Test Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h2 {
+      color: #1e293b;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card h2 i {
+      color: #2563eb;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .status.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status.info {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .info-item {
+      background: #f8fafc;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .info-label {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+      font-weight: 600;
+      color: #1e293b;
+      word-break: break-all;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #2563eb;
+      color: #2563eb;
+    }
+
+    .btn-outline:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .users-table th,
+    .users-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .users-table th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #64748b;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .users-table tr:hover {
+      background: #f8fafc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge.new {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .badge.returning {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .code-block {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .alert.warning {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fbbf24;
+    }
+
+    .alert i {
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-vial"></i> CloudDrop Authentication System Test</h1>
+      <p>Use this page to test and debug your authentication system</p>
+    </div>
+
+    <!-- Status Card -->
+    <div class="card">
+      <h2><i class="fas fa-heartbeat"></i> System Status</h2>
+      <div id="systemStatus"></div>
+    </div>
+
+    <!-- Current Session -->
+    <div class="card">
+      <h2><i class="fas fa-user-circle"></i> Current Session</h2>
+      <div id="sessionInfo"></div>
+    </div>
+
+    <!-- All Users -->
+    <div class="card">
+      <h2><i class="fas fa-users"></i> All Registered Users</h2>
+      <div id="usersInfo"></div>
+    </div>
+
+    <!-- Test Actions -->
+    <div class="card">
+      <h2><i class="fas fa-flask"></i> Test Actions</h2>
+      <button class="btn btn-primary" onclick="testRegister()">
+        <i class="fas fa-user-plus"></i> Test Registration
+      </button>
+      <button class="btn btn-primary" onclick="testLogin()">
+        <i class="fas fa-sign-in-alt"></i> Test Login
+      </button>
+      <button class="btn btn-outline" onclick="refreshData()">
+        <i class="fas fa-sync"></i> Refresh Data
+      </button>
+      <button class="btn btn-danger" onclick="clearAllData()">
+        <i class="fas fa-trash"></i> Clear All Data
+      </button>
+    </div>
+
+    <!-- Storage Info -->
+    <div class="card">
+      <h2><i class="fas fa-database"></i> Storage Information</h2>
+      <div id="storageInfo"></div>
+    </div>
+
+    <!-- Implementation Guide -->
+    <div class="card">
+      <h2><i class="fas fa-book"></i> Quick Implementation Guide</h2>
+      <div class="alert warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <div>
+          <strong>Important:</strong> This is a test page. Make sure you have auth.js in the same directory as this file.
+        </div>
+      </div>
+      <h3 style="margin: 1rem 0 0.5rem 0; color: #1e293b;">Required Files:</h3>
+      <div class="code-block">
+your-project/
+├── index.html (landing page)
+├── dashboard.html (existing users)
+├── newdashfor.html (new users)
+├── auth.js (authentication system)
+├── dashboard-init.js (dashboard protection)
+└── test.html (this file)</div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    // let auth;
+
+    try {
+      auth = new CloudDropAuth();
+      displaySystemStatus(true);
+    } catch (error) {
+      displaySystemStatus(false, error.message);
+    }
+
+    function displaySystemStatus(working, error = null) {
+      const statusDiv = document.getElementById('systemStatus');
+      
+      if (working) {
+        statusDiv.innerHTML = `
+          <div class="status success">
+            <i class="fas fa-check-circle"></i>
+            Authentication System is Working
+          </div>
+          <p style="color: #64748b;">All systems operational. auth.js loaded successfully.</p>
+        `;
+      } else {
+        statusDiv.innerHTML = `
+          <div class="status error">
+            <i class="fas fa-exclamation-circle"></i>
+            Authentication System Error
+          </div>
+          <p style="color: #ef4444; margin-top: 0.5rem;">${error || 'Could not load auth.js'}</p>
+          <p style="color: #64748b; margin-top: 0.5rem;">Make sure auth.js is in the same directory as this test page.</p>
+        `;
+      }
+
+      if (working) {
+        displaySessionInfo();
+        displayAllUsers();
+        displayStorageInfo();
+      }
+    }
+
+    function displaySessionInfo() {
+      const sessionDiv = document.getElementById('sessionInfo');
+      
+      if (auth.isAuthenticated()) {
+        const user = auth.getCurrentUser();
+        const session = auth.getCurrentSession();
+        
+        sessionDiv.innerHTML = `
+          <div class="status success">
+            <i class="fas fa-check-circle"></i>
+            Logged In
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">User ID</div>
+              <div class="info-value">${user.id}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Name</div>
+              <div class="info-value">${user.name}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Email</div>
+              <div class="info-value">${user.email}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Plan</div>
+              <div class="info-value">${user.plan.toUpperCase()}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">User Type</div>
+              <div class="info-value">
+                <span class="badge ${user.isNewUser ? 'new' : 'returning'}">
+                  ${user.isNewUser ? 'New User' : 'Returning User'}
+                </span>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Session Expires</div>
+              <div class="info-value">${new Date(session.expiresAt).toLocaleString()}</div>
+            </div>
+          </div>
+          <div style="margin-top: 1rem;">
+            <button class="btn btn-danger" onclick="auth.logout()">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </div>
+        `;
+      } else {
+        sessionDiv.innerHTML = `
+          <div class="status info">
+            <i class="fas fa-info-circle"></i>
+            No Active Session
+          </div>
+          <p style="color: #64748b;">You are not currently logged in.</p>
+        `;
+      }
+    }
+
+    function displayAllUsers() {
+      const usersDiv = document.getElementById('usersInfo');
+      const users = auth.getAllUsers();
+      
+      if (users.length === 0) {
+        usersDiv.innerHTML = `
+          <p style="color: #64748b;">No users registered yet. Try the test registration button below.</p>
+        `;
+        return;
+      }
+
+      let tableHTML = `
+        <p style="color: #64748b; margin-bottom: 1rem;">Total Users: <strong>${users.length}</strong></p>
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Plan</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Last Login</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      users.forEach(user => {
+        tableHTML += `
+          <tr>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${user.plan.toUpperCase()}</td>
+            <td>
+              <span class="badge ${user.isNewUser ? 'new' : 'returning'}">
+                ${user.isNewUser ? 'New' : 'Active'}
+              </span>
+            </td>
+            <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+            <td>${new Date(user.lastLogin).toLocaleDateString()}</td>
+          </tr>
+        `;
+      });
+
+      tableHTML += `
+          </tbody>
+        </table>
+      `;
+
+      usersDiv.innerHTML = tableHTML;
+    }
+
+    function displayStorageInfo() {
+      const storageDiv = document.getElementById('storageInfo');
+      const users = auth.getAllUsers();
+      const usedKeys = Object.keys(localStorage).length;
+      const totalSize = JSON.stringify(localStorage).length;
+      
+      storageDiv.innerHTML = `
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">Total Users</div>
+            <div class="info-value">${users.length}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">LocalStorage Keys</div>
+            <div class="info-value">${usedKeys}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Storage Used</div>
+            <div class="info-value">${(totalSize / 1024).toFixed(2)} KB</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Active Sessions</div>
+            <div class="info-value">${sessionStorage.length}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function testRegister() {
+      const randomNum = Math.floor(Math.random() * 10000);
+      const result = auth.register(
+        `Test User ${randomNum}`,
+        `test${randomNum}@example.com`,
+        'testpassword123'
+      );
+      
+      if (result.success) {
+        alert(`✅ Registration successful!\n\nUser: ${result.user.name}\nEmail: ${result.user.email}\nType: ${result.isNewUser ? 'New User' : 'Existing User'}`);
+        refreshData();
+      } else {
+        alert(`❌ Registration failed!\n\n${result.message}`);
+      }
+    }
+
+    function testLogin() {
+      const users = auth.getAllUsers();
+      if (users.length === 0) {
+        alert('❌ No users to login with. Create a test user first.');
+        return;
+      }
+      
+      const testUser = users[0];
+      // Note: We can't actually login without knowing the password
+      alert(`ℹ️ Test Login Info:\n\nTo test login, use these credentials on your main page:\n\nEmail: ${testUser.email}\nPassword: [the password you set during registration]\n\nOr create a new test user and remember the password.`);
+    }
+
+    function refreshData() {
+      displaySessionInfo();
+      displayAllUsers();
+      displayStorageInfo();
+      alert('✅ Data refreshed!');
+    }
+
+    function clearAllData() {
+      if (confirm('⚠️ This will delete ALL user data and sessions. Are you sure?')) {
+        if (confirm('🚨 This action cannot be undone. Really delete everything?')) {
+          localStorage.clear();
+          sessionStorage.clear();
+          alert('✅ All data cleared! Refreshing page...');
+          location.reload();
+        }
+      }
+    }
+
+    // Auto-refresh data every 5 seconds
+    setInterval(() => {
+      if (auth && auth.isAuthenticated()) {
+        displaySessionInfo();
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
